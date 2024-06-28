@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Orchid\Screens\Client\ClientListScreen;
 use App\Orchid\Screens\Examples\ExampleActionsScreen;
 use App\Orchid\Screens\Examples\ExampleCardsScreen;
 use App\Orchid\Screens\Examples\ExampleChartsScreen;
@@ -18,6 +19,7 @@ use App\Orchid\Screens\User\UserEditScreen;
 use App\Orchid\Screens\User\UserListScreen;
 use App\Orchid\Screens\User\UserProfileScreen;
 use Illuminate\Support\Facades\Route;
+use Tabuna\Breadcrumbs\Breadcrumbs;
 use Tabuna\Breadcrumbs\Trail;
 
 /*
@@ -31,9 +33,24 @@ use Tabuna\Breadcrumbs\Trail;
 |
 */
 
+// Clients 
+Route::screen('clients', ClientListScreen::class)
+    ->name('platform.clients');
+
+// Breadcrumbs    
+Route::screen('clients', ClientListScreen::class)
+    ->name('platform.clients')
+    ->breadcrumbs(function (Trail $trail) {
+        return $trail
+            ->parent('platform.index')
+            ->push(__('Clients'), route('platform.clients'));
+    });
+
 // Main
 Route::screen('/main', PlatformScreen::class)
     ->name('platform.main');
+
+
 
 // Platform > Profile
 Route::screen('profile', UserProfileScreen::class)
